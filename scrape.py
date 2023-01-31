@@ -170,6 +170,7 @@ def get_and_save_records(ids: np.ndarray, req_headers : Dict[str, str], start : 
         ids = ids[:number]
 
     with ThreadPoolExecutor(max_workers=25) as executor:
+        # TODO: replace repeat with single params dict
         list(tqdm(executor.map(send_record_req, repeat(req_headers), ids),
             total=len(ids),
             desc= "scraping all confederate soldier ids"
