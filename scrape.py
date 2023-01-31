@@ -1,6 +1,5 @@
 from os import getcwd
 from seleniumwire import webdriver
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 
 PATH = getcwd() + "/chromedriver.exe"
@@ -8,10 +7,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from typing import Dict, List
 import requests
 import re
-from urllib.parse import urlencode
 from pprint import pprint
-import logging
 import json
+from concurrent.futures import ThreadPoolExecutor
+from tqdm import tqdm
+from itertools import repeat
 
 def get_headers_dict() -> Dict[str, str]:
     driver = webdriver.Chrome(PATH)
@@ -32,6 +32,79 @@ def get_headers_dict() -> Dict[str, str]:
     # create a dictionary of headers
     req_dict = {key: value for key, value in req_header.raw_items()}
     return req_dict
+
+def generate_doc_search_payloads(start : int, end : int) -> List[Dict]:
+    payloads = []
+    
+    increment = 5000
+    for i in range(start, end, increment):
+        offset = i
+
+        payload = {
+            'environment': {'origin': 'regiment'},
+            'facetRequests': [{'maxCount': 200, 'placeLevel': 'COUNTRY', 'type': 'place'},
+                            {'maxCount': 200,
+                                'placeLevel': 'STATE',
+                                'placeParents': ['rel.148838'],
+                                'type': 'place'},
+                            {'maxCount': 200, 'type': 'military.service.branch'},       
+                            {'maxCount': 200, 'type': 'general.title.content.type'},    
+                            {'maxCount': 200, 'type': 'general.title.provider.id'}],    
+            'filters': [{'type': 'military.conflict',
+                        'values': ['Civil War (Confederate)']},
+                        {'type': 'general.title.content.sub-type',
+                        'values': ['SERVICEPERSON']},
+                        {'type': 'general.title.content.collection',
+                        'values': ['us-civil-war-confederate']},
+                        {'type': 'general.title.id', 'values': ['1087']}],
+            'highlight': {'highlight': True},
+            'maxCount': increment,
+            'offset': offset,
+        }
+
+        payloads.append(payload)
+
+    return payloads
+
+def get_id(resp_body) -> List[int]:
+    return int(resp_body["doc"]["id"]["id"])
+
+def send_docsearch_req(req_headers : Dict[str, str], payload : Dict)-> List[int]:
+    try:
+        resp = requests.post(url="https://www.fold3.com/fold31-search/doc-search", 
+            json=payload, 
+            headers=req_headers, 
+            timeout=120
+        )
+    except requests.exceptions.Timeout as e:
+        print("timed out!", e)
+        return []
+    except requests.exceptions.ConnectionError as e:
+        print("connection error", e)
+        return []
+    except Exception as e:
+        print(e)
+        return []
+    resp_json = resp.json()
+    if "hits" not in resp_json.keys():
+        print(resp.text)
+        pprint(payload)
+        return []
+    ids = list(map(get_id, resp_json["hits"]))
+    return ids
+
+def get_record_ids(req_headers : Dict[str, str]) -> List[int]:
+    # record_count = 1_300_000 # 1.3 million (round up 1.2 million+)
+    payloads = generate_doc_search_payloads(0, 10000)
+
+    with ThreadPoolExecutor(max_workers=25) as executor:
+        # map preserves order of the transcripts
+        ids = list(tqdm(executor.map(send_docsearch_req, repeat(req_headers), payloads), 
+            total=len(payloads),
+            desc= "scraping all confederate soldier ids"
+        ))
+
+    return ids
 
 def send_req(req_headers : Dict[str, str]):
     try:
@@ -63,7 +136,10 @@ def extract_elements(data: Dict):
 
 def scrape():
     req_headers = get_headers_dict()
-    return send_req(req_headers)
+    ids =  get_record_ids(req_headers)
+    return ids
+
+    # return send_req(req_headers)
 
 if __name__ == "__main__":
     pprint(scrape())
