@@ -128,7 +128,7 @@ def save_record_ids(ids : np.ndarray):
 
 def send_record_req(req_headers : Dict[str, str], id : int) -> List[Dict]:
     try:
-        resp = requests.get(url=f"https://www.fold3.com/memorial/{id}/", headers=req_headers, timeout=120)
+        resp = requests.get(url=f"https://www.fold3.com/memorial/{id}/", headers=req_headers, timeout=600)
     except requests.exceptions.Timeout as e:
         print(id, "timed out!", e)
         return
@@ -169,8 +169,7 @@ def get_and_save_records(ids: np.ndarray, req_headers : Dict[str, str], start : 
     if number >= 0:
         ids = ids[:number]
 
-    with ThreadPoolExecutor(max_workers=25) as executor:
-        # TODO: replace repeat with single params dict
+    with ThreadPoolExecutor() as executor:
         list(tqdm(executor.map(send_record_req, repeat(req_headers), ids),
             total=len(ids),
             desc= "scraping all confederate soldier ids"
