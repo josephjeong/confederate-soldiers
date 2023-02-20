@@ -1,6 +1,11 @@
 # project-specific
 experimentation
 data
+chromedriver.exe
+chromedriver
+
+# IDE related
+.vscode
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
