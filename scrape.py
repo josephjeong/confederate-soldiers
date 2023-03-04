@@ -19,8 +19,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from tqdm import tqdm
 
 MAX_WORKERS = 36
+REQ_HEADERS = {}
 
-def get_headers_dict() -> Dict[str, str]:
+def get_headers_dict():
     driver = webdriver.Chrome(PATH)
     driver.get("https://www.fold3.com/login")
 
@@ -38,7 +39,8 @@ def get_headers_dict() -> Dict[str, str]:
 
     # create a dictionary of headers
     req_dict = {key: value for key, value in req_header.raw_items()}
-    return req_dict
+    global REQ_HEADERS
+    REQ_HEADERS = req_dict
 
 def get_military_entities(req_headers : Dict[str, str]) -> List[Dict[str, Any]]:
     payload = {
@@ -195,11 +197,16 @@ def send_docsearch_req(req_headers : Dict[str, str], payload : Dict)-> List[int]
     ids = list(map(get_id, resp_json["hits"]))    
     return ids
 
-def get_record_ids(req_headers : Optional[Dict[str, str]], entities : List[Dict]) -> np.ndarray:
+def get_record_ids() -> np.ndarray:
     # if ids are already cached, use them instead of scraping
     if os.path.exists("data/confederate_ids.npy"):
         print("using cached ids")
         return np.load("data/confederate_ids.npy")
+
+    req_headers = REQ_HEADERS.copy()
+
+    # get all the entities that are military service
+    entities = get_military_entities(req_headers)
 
     payloads = generate_doc_search_payloads(entities)
 
@@ -220,29 +227,57 @@ def get_record_ids(req_headers : Optional[Dict[str, str]], entities : List[Dict]
 def save_record_ids(ids : np.ndarray):
     np.save("data/confederate_ids.npy", ids)
 
-def send_record_req(req_headers : Dict[str, str], id : int):
+def record_element_list_to_dict(elements : List[Dict | None]) -> Dict:
+    return_dict = {}
+    for element in elements:
+
+        if element is None:
+            continue
+
+        if element["type"] not in return_dict.keys():
+            return_dict[element["type"]] = element["value"]
+        else:
+            return_dict[element["type"]] = return_dict[element["type"]] + " - " + element["value"]
+    return return_dict
+
+def send_record_req(id : int):
+    req_headers = REQ_HEADERS.copy()
+
     try:
         resp = requests.get(url=f"https://www.fold3.com/memorial/{id}/", headers=req_headers, timeout=600)
+
     except Exception as e:
         print(id, e)
         return
+
     match = re.search(r"\"F3_COMPONENT_DATA\":\s*({(?:.*)})", resp.text)
     if match is None:
-        print("no match")
+        print(id, "no match")
         return
     data = json.loads(match.group(1))
     try:
         elements = data["memorialContent"]["elements"]
     except:
-        print(data)
+        print(id, data)
         return
     mapped_elements = list(filter(lambda x: x is not None, map(extract_record_elements, elements)))
+
+    # combine elements with same type and turn into dict
+    mapped_elements = record_element_list_to_dict(mapped_elements)
+
     # pickle and save file in "data/records" directory
     with open(f"data/records/{id}.pkl", "wb") as f:
         pickle.dump(mapped_elements, f)
+
+    # refresh cookie to refresh session token
+    if id % 1000 == 0:
+        print(REQ_HEADERS["cookie"])
+        REQ_HEADERS["cookie"] = resp.headers.get("Set-Cookie")
+        print(id, "refreshed cookie")
+        print(REQ_HEADERS["cookie"])
     return
 
-def extract_record_elements(data: Dict):
+def extract_record_elements(data: Dict) -> Dict | None:
     element = data["element"]
     if "event" not in element.keys():
         return None
@@ -252,7 +287,7 @@ def extract_record_elements(data: Dict):
     new_dict["value"] = element["value"]
     return new_dict
 
-def get_and_save_records(ids: np.ndarray, req_headers : Dict[str, str], start : int=0, number : int=100_000):
+def get_and_save_records(ids: np.ndarray,  start : int=0, number : int=100_000):
     # if scrape fails somewhere, start from where it left off
     if start != 0:
         ids = ids[ids > start]
@@ -262,16 +297,17 @@ def get_and_save_records(ids: np.ndarray, req_headers : Dict[str, str], start : 
         ids = ids[:number]
 
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        list(tqdm(executor.map(send_record_req, repeat(req_headers), ids),
+        list(tqdm(executor.map(send_record_req, ids),
             total=len(ids),
-            desc= "scraping all confederate soldier ids"
+            desc= "scraping all confederate soldier records"
         ))
 
 def scrape():
-    req_headers = get_headers_dict()
-    entities = get_military_entities(req_headers)
-    ids =  get_record_ids(req_headers, entities)
-    get_and_save_records(ids, req_headers, number=-1)
+    get_headers_dict()
+    
+    # ids =  get_record_ids()
+    ids = np.array([653619292, 653619424, 656462135])
+    get_and_save_records(ids, number=-1)
 
     # add a check to make sure directories exist
     # problem with expiring authentication tokens
