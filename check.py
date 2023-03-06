@@ -6,16 +6,37 @@ from concurrent.futures import ProcessPoolExecutor
 from tqdm import tqdm
 import pandas as pd
 
+# some files are a list, some files are a dict
+def record_element_list_to_dict(elements):
+    return_dict = {}
+    for element in elements:
+
+        if element is None:
+            continue
+
+        if element["type"] not in return_dict.keys():
+            return_dict[element["type"]] = element["value"]
+        elif element["type"] == "full-name": # for full-name, keep the longest full name
+            if len(element["type"]) > len(return_dict[element["type"]]):
+                return_dict[element["type"]] = element["value"]
+        else:
+            return_dict[element["type"]] = return_dict[element["type"]] + " - " + element["value"]
+    return return_dict
+
 def unpickle_record(filename: str) -> pd.DataFrame:
     record = None
     with open(f"data/records/{filename}", "rb") as f:
-        record = pickle.load(f)
-    record_dict = {}
-    for column in record:
-        record_dict[column["type"]] = column["value"]
+        try:
+            record = pickle.load(f)
+        except:
+            print(f"Error unpickling {filename}")
+            # return empty df
+            return pd.DataFrame()
+    if isinstance(record, list):
+        record = record_element_list_to_dict(record)
     id = filename.split(".")[0]
-    record_dict["id"] = id
-    return pd.DataFrame(record_dict, index=[0])
+    record["id"] = id
+    return pd.DataFrame(record, index=[0])
 
 # open and unpickle all files in "data/records" directory
 def get_all_records() -> pd.DataFrame:
