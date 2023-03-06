@@ -11,68 +11,36 @@ import numpy as np
 from src.auth import REQ_HEADERS
 from src.config import MAX_WORKERS
 
-def record_element_list_to_dict(elements : List[Dict | None]) -> Dict:
-    return_dict = {}
-    for element in elements:
-
-        if element is None:
-            continue
-
-        if element["type"] not in return_dict.keys():
-            return_dict[element["type"]] = element["value"]
-        elif element["type"] == "full-name": # for full-name, keep the longest full name
-            if len(element["type"]) > len(return_dict[element["type"]]):
-                return_dict[element["type"]] = element["value"]
-        else:
-            return_dict[element["type"]] = return_dict[element["type"]] + " - " + element["value"]
-    return return_dict
-
 def send_record_req(id : int):
-    NUM_RETRIES = 12
-    WAIT_TIME = 0 # 5 min wait before retry
-    
-    for _ in range(NUM_RETRIES):
+        # copy request headers so we don't modify the original
         req_headers = REQ_HEADERS.copy()
 
         try:
+            # send request to get record
             resp = requests.get(url=f"https://www.fold3.com/memorial/{id}/", headers=req_headers, timeout=600)
 
-        except Exception as e:
-            time.sleep(WAIT_TIME)
-            continue
+            # send data in html webpage received
+            match = re.search(r"\"F3_COMPONENT_DATA\":\s*({(?:.*)})", resp.text)
+            if match is None:
+                raise Exception("no match")
+            data = json.loads(match.group(1))
 
-        match = re.search(r"\"F3_COMPONENT_DATA\":\s*({(?:.*)})", resp.text)
-        if match is None:
-            time.sleep(WAIT_TIME)
-            continue
-
-        data = json.loads(match.group(1))
-
-        try:
+            # extrate elements from json string extracted
             elements = data["memorialContent"]["elements"]
-        except:
-            time.sleep(WAIT_TIME)
-            continue
-    
-        mapped_elements = list(filter(lambda x: x is not None, map(extract_record_elements, elements)))
+            mapped_elements = list(filter(lambda x: x is not None, map(extract_record_elements, elements)))
 
-        # combine elements with same type and turn into dict
-        mapped_elements = record_element_list_to_dict(mapped_elements)
+            # pickle and save file in "data/records" directory
+            with open(f"data/records/{id}.pkl", "wb") as f:
+                pickle.dump(mapped_elements, f)
 
-        # pickle and save file in "data/records" directory
-        with open(f"data/records/{id}.pkl", "wb") as f:
-            pickle.dump(mapped_elements, f)
+            # refresh cookie to refresh session token
+            if id % 1000 == 0:
+                REQ_HEADERS["cookie"] = resp.headers.get("Set-Cookie")
 
-        # refresh cookie to refresh session token
-        if id % 1000 == 0:
-            REQ_HEADERS["cookie"] = resp.headers.get("Set-Cookie")
-        return
-
-    # this runs if all retries fail
-    # append id to text file so we can scrape it later
-    with open("data/failed_ids.txt", "a") as f:
-        f.write(f"{id}\n")
-    # print(f"failed to scrape record {id}")
+        except Exception as e:
+            # append id to text file so we can scrape it later
+            with open("data/failed_ids.txt", "a") as f:
+                f.write(f"{id}\n")
 
 def extract_record_elements(data: Dict) -> Dict | None:
     element = data["element"]

@@ -44,7 +44,8 @@ def get_all_records() -> pd.DataFrame:
     with ProcessPoolExecutor() as executor:
         records = pd.concat(tqdm(executor.map(unpickle_record, filenames), total=len(filenames), desc="unpickling records"))
     return records
-if __name__ == "__main__":
+
+def compile_csv():
     df = get_all_records()
     df.to_csv("data/records.csv", index=False)
     print(df)
