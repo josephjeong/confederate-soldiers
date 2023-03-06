@@ -1,6 +1,5 @@
 import os
 import sys
-import time
 import requests
 
 import numpy as np
@@ -10,8 +9,8 @@ from itertools import repeat
 from concurrent.futures import ThreadPoolExecutor
 from typing import Dict, List, Any
 
-from src.auth import REQ_HEADERS
-from src.config import MAX_WORKERS
+import src.auth as auth
+import src.config as config
 
 def get_military_entities(req_headers : Dict[str, str]) -> List[Dict[str, Any]]:
     payload = {
@@ -50,19 +49,20 @@ def get_military_entities(req_headers : Dict[str, str]) -> List[Dict[str, Any]]:
             headers=req_headers, 
             timeout=120
         )
+
+        resp_json = resp.json()
+        facets = resp_json["facets"][0]["facets"]
+
+        # get all the facet names
+        entities = [{
+            "name": facet["v"],
+            "count": facet["c"]
+            } for facet in facets]
+        return entities
+
     except Exception as e:
         print(e)
         sys.exit(1)
-
-    resp_json = resp.json()
-    facets = resp_json["facets"][0]["facets"]
-
-    # get all the facet names
-    entities = [{
-        "name": facet["v"],
-        "count": facet["c"]
-        } for facet in facets]
-    return entities
     
 def generate_doc_search_payloads(entities : List[Dict]) -> List[Dict]:
     payloads = []
@@ -158,7 +158,7 @@ def send_docsearch_req(req_headers : Dict[str, str], payload : Dict)-> List[int]
         ids = list(map(lambda x: int(x["doc"]["id"]["id"]), resp_json["hits"]))    
         return ids
 
-    print("failed to get ids for payload", payload)
+    print("failed to get ids for payload:", payload)
     print("reason:", exc_reason)
     sys.exit(1)
 
@@ -166,9 +166,9 @@ def get_record_ids() -> np.ndarray:
     # if ids are already cached, use them instead of scraping
     if os.path.exists("data/confederate_ids.npy"):
         print("using cached ids")
-        return np.load("data/confederate_ids.npy")
+        return np.load("data/confederate_ids.npy", allow_pickle=True)
 
-    req_headers = REQ_HEADERS.copy()
+    req_headers = auth.REQ_HEADERS.copy()
 
     # get all the entities that are military service
     entities = get_military_entities(req_headers)
@@ -177,7 +177,7 @@ def get_record_ids() -> np.ndarray:
     payloads = generate_doc_search_payloads(entities)
 
     # get all ids in one file
-    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+    with ThreadPoolExecutor(max_workers=config.MAX_WORKERS) as executor:
         ids = list(tqdm(executor.map(send_docsearch_req, repeat(req_headers), payloads), 
             total=len(payloads),
             desc= "scraping all confederate soldier ids"
@@ -185,9 +185,10 @@ def get_record_ids() -> np.ndarray:
 
     # flatten results
     flattened_ids = np.array([item for sublist in ids for item in sublist])
-    sorted_flattened_ids = np.sort(flattened_ids)
+    unique_flattened_ids = np.unique(flattened_ids) # only have unique ids
+    sorted_flattened_ids = np.sort(unique_flattened_ids)
 
     # cache ids for future use
-    np.save("data/confederate_ids.npy", ids)
+    np.save("data/confederate_ids.npy", sorted_flattened_ids)
 
     return sorted_flattened_ids

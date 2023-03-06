@@ -1,12 +1,9 @@
 import os
 import pickle
-from pprint import pprint
-from typing import Dict, List
 from concurrent.futures import ProcessPoolExecutor
 from tqdm import tqdm
 import pandas as pd
 
-# some files are a list, some files are a dict
 def record_element_list_to_dict(elements):
     return_dict = {}
     for element in elements:
@@ -32,6 +29,7 @@ def unpickle_record(filename: str) -> pd.DataFrame:
             print(f"Error unpickling {filename}")
             # return empty df
             return pd.DataFrame()
+    # some files are a list, some files are a dict (from legacy code)
     if isinstance(record, list):
         record = record_element_list_to_dict(record)
     id = filename.split(".")[0]

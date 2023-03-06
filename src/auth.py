@@ -1,4 +1,4 @@
-from os import getcwd
+import os
 
 from selenium.webdriver.support.wait import WebDriverWait
 from seleniumwire import webdriver
@@ -6,8 +6,14 @@ from selenium.webdriver.support import expected_conditions as EC
 
 REQ_HEADERS = {}
 
+def clear_terminal():
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
+
 def get_headers_dict():
-    driver = webdriver.Chrome(getcwd() + "/chromedriver.exe")
+    driver = webdriver.Chrome(os.getcwd() + "/chromedriver.exe")
     driver.get("https://www.fold3.com/login")
 
     # wait to be redirected to the home page
@@ -18,6 +24,8 @@ def get_headers_dict():
     reqs = driver.requests
     driver.quit()
  
+    clear_terminal()
+
     # get the last request that has a cookie (the authenticated request)
     reqs_with_cookies = list(filter(lambda req: "cookie" in req.headers , reqs))
     req_header = list(map(lambda req: req.headers, reqs_with_cookies))[-1]
