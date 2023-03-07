@@ -116,7 +116,6 @@ def generate_doc_search_payloads(entities : List[Dict]) -> List[Dict]:
                         'type': 'general.title.content.collection',
                         'values': ['us-civil-war-confederate']
                     },
-                    # removing this to check if this works - and if this creates the diff in num records
                     {
                         'type': 'general.title.id', 
                         'values': ['1087']

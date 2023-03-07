@@ -10,6 +10,7 @@ def scrape():
     get_headers_dict()
 
     while True:
+        """
         # read all ids
         ids = get_record_ids()
 
@@ -29,9 +30,12 @@ def scrape():
 
         # clear existing failed_ids.txt
         open("data/failed_ids.txt", "w").close()
+        """
 
+        ids = np.array([653619202])
         get_and_save_records(ids)
-        compile_csv()
+        break
 
 if __name__ == "__main__":
     scrape()
+    # compile_csv()

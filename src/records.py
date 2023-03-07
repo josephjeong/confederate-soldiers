@@ -25,6 +25,15 @@ def send_record_req(id : int):
             raise Exception("no match")
         data = json.loads(match.group(1))
 
+        # save data as pickle file in data/responses
+        with open(f"data/responses/{id}.pkl", "wb") as f:
+            pickle.dump(data, f)
+
+        print(data)
+
+        import sys
+        sys.exit()
+
         # extrate elements from json string extracted
         elements = data["memorialContent"]["elements"]
         mapped_elements = list(filter(lambda x: x is not None, map(extract_record_elements, elements)))
