@@ -1,9 +1,7 @@
 import json
 import pickle
 import re
-import time
 from concurrent.futures import ThreadPoolExecutor
-from typing import Dict, List
 from tqdm import tqdm
 import requests
 import numpy as np
@@ -25,22 +23,9 @@ def send_record_req(id : int):
             raise Exception("no match")
         data = json.loads(match.group(1))
 
-        # save data as pickle file in data/responses
-        with open(f"data/responses/{id}.pkl", "wb") as f:
-            pickle.dump(data, f)
-
-        print(data)
-
-        import sys
-        sys.exit()
-
-        # extrate elements from json string extracted
-        elements = data["memorialContent"]["elements"]
-        mapped_elements = list(filter(lambda x: x is not None, map(extract_record_elements, elements)))
-
         # pickle and save file in "data/records" directory
         with open(f"data/records/{id}.pkl", "wb") as f:
-            pickle.dump(mapped_elements, f)
+            pickle.dump(data, f)
 
         # refresh cookie to refresh session token
         if id % 1000 == 0:
@@ -50,17 +35,6 @@ def send_record_req(id : int):
         # append id to text file so we can scrape it later
         with open("data/failed_ids.txt", "a") as f:
             f.write(f"{id}\n")
-        # print(f"failed to scrape id {id}\n", e)
-
-def extract_record_elements(data: Dict) -> Dict | None:
-    element = data["element"]
-    if "event" not in element.keys():
-        return None
-    new_dict = {}
-    new_dict["type"] = element["type"]
-    new_dict["name"] = element["name"]
-    new_dict["value"] = element["value"]
-    return new_dict
 
 def get_and_save_records(ids: np.ndarray):
     with ThreadPoolExecutor(max_workers=config.MAX_WORKERS) as executor:
