@@ -23,6 +23,10 @@ def send_record_req(id : int):
             raise Exception("no match")
         data = json.loads(match.group(1))
 
+        # check if memorialContent is a key and reject if not
+        if "memorialContent" not in data.keys():
+            raise Exception("no memorialContent")
+
         # pickle and save file in "data/records" directory
         with open(f"data/records/{id}.pkl", "wb") as f:
             pickle.dump(data, f)
