@@ -187,6 +187,11 @@ def get_record_ids() -> np.ndarray:
     unique_flattened_ids = np.unique(flattened_ids) # only have unique ids
     sorted_flattened_ids = np.sort(unique_flattened_ids)
 
+    # these don't seem to be real ids
+    # remove 655288166, and 654162824 from array
+    sorted_flattened_ids = sorted_flattened_ids[sorted_flattened_ids != 655288166]
+    sorted_flattened_ids = sorted_flattened_ids[sorted_flattened_ids != 654162824]
+
     # cache ids for future use
     np.save("data/confederate_ids.npy", sorted_flattened_ids)
 

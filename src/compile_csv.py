@@ -6,16 +6,16 @@ import pandas as pd
 from concurrent.futures import ProcessPoolExecutor
 from tqdm import tqdm
 from collections import defaultdict
-import time
 
 def process_file(filename: str) -> pd.DataFrame:
     with open(f"data/records/{filename}", "rb") as f:
         data = pickle.load(f)
-        
+    
     facts = defaultdict(lambda : defaultdict(str)) 
     prev_military_service_type = "" # to detect when event type changes
     counter = defaultdict(int) # to append event types
-
+    name = ""
+    
     for datum in data["memorialContent"]["elements"]:
         element = datum["element"]
         # if not an event, not relevant to us
@@ -50,9 +50,9 @@ def process_file(filename: str) -> pd.DataFrame:
 
         # if internal people, this is just the name
         elif event_type == "INTERNAL_PEOPLE":
-            facts["name"] = element["value"]
+            name = element["value"]
             continue
-        
+
         event_type = event_type.replace(" ", "_")
 
         # only append to string when there is already a value
@@ -60,11 +60,12 @@ def process_file(filename: str) -> pd.DataFrame:
             facts[event_type][element["name"]] = str(element["value"])
         else:
             facts[event_type][element["name"]] += ", " + str(element["value"])
-
     df = pd.DataFrame.from_dict(facts, orient="index")
+
     df.reset_index(inplace=True)
     df.rename(columns={"index": "event_type"}, inplace=True)
-    df["id"] = filename.split(".")[0] # type: ignore    
+    df["id"] = filename.split(".")[0] 
+    df["name"] = name 
 
     return df
 
@@ -72,18 +73,18 @@ def process_file(filename: str) -> pd.DataFrame:
 def get_all_records() -> pd.DataFrame:
     filenames = os.listdir("data/records")
     with ProcessPoolExecutor() as executor:
-        records = pd.concat(tqdm(executor.map(process_file, filenames), total=len(filenames), desc="unpickling records"))
+        records = pd.concat(tqdm(
+            executor.map(process_file, filenames), 
+            total=len(filenames), 
+            desc="unpickling records"
+        ))
     return records
 
 def compile_csv():
     df = get_all_records()
 
     print("compiling csv")
-    # df to csv with time taken printed
-    start = time.time()
     df.to_csv("data/records.csv", index=False)
-    end = time.time()
-    print("time taken: " + str(end - start))
 
-    df.reset_index(inplace=True)
+    df.reset_index(inplace=True, drop=True)
     print(df)
