@@ -14,8 +14,8 @@ def scrape():
         # read all ids
         ids = get_record_ids()
 
-        # get all files in data/records
-        filenames = os.listdir("data/records")
+        # get all files in data/soldier_records
+        filenames = os.listdir("data/soldier_records")
         if filenames:
             filename_ids = np.array([int(filename.split(".")[0]) for filename in filenames])
 
@@ -36,3 +36,8 @@ def scrape():
 if __name__ == "__main__":
     scrape()
     compile_csv()
+
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--scrape", action="store_true")
+    args = parser.parse_args()

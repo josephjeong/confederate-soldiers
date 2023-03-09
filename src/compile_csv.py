@@ -8,7 +8,7 @@ from tqdm import tqdm
 from collections import defaultdict
 
 def process_file(filename: str) -> pd.DataFrame:
-    with open(f"data/records/{filename}", "rb") as f:
+    with open(f"data/soldier_records/{filename}", "rb") as f:
         data = pickle.load(f)
     
     facts = defaultdict(lambda : defaultdict(str)) 
@@ -69,9 +69,9 @@ def process_file(filename: str) -> pd.DataFrame:
 
     return df
 
-# open and unpickle all files in "data/records" directory
+# open and unpickle all files in "data/soldier_records" directory
 def get_all_records() -> pd.DataFrame:
-    filenames = os.listdir("data/records")
+    filenames = os.listdir("data/soldier_records")
     with ProcessPoolExecutor() as executor:
         records = pd.concat(tqdm(
             executor.map(process_file, filenames), 
@@ -84,7 +84,7 @@ def compile_csv():
     df = get_all_records()
 
     print("compiling csv")
-    df.to_csv("data/records.csv", index=False)
+    df.to_csv("data/soldier_records.csv", index=False)
 
     df.reset_index(inplace=True, drop=True)
     print(df)

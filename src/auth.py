@@ -1,5 +1,7 @@
 import os
 
+from config import CHROMEDRIVER_FILENAME
+
 from selenium.webdriver.support.wait import WebDriverWait
 from seleniumwire import webdriver
 from selenium.webdriver.support import expected_conditions as EC
@@ -13,7 +15,7 @@ def clear_terminal():
         os.system('clear')
 
 def get_headers_dict():
-    driver = webdriver.Chrome(os.getcwd() + "/chromedriver.exe")
+    driver = webdriver.Chrome(os.getcwd() + CHROMEDRIVER_FILENAME)
     driver.get("https://www.fold3.com/login")
 
     # wait to be redirected to the home page

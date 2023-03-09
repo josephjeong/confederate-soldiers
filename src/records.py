@@ -27,8 +27,8 @@ def send_record_req(id : int):
         if "memorialContent" not in data.keys():
             raise Exception("no memorialContent")
 
-        # pickle and save file in "data/records" directory
-        with open(f"data/records/{id}.pkl", "wb") as f:
+        # pickle and save file in "data/soldier_records" directory
+        with open(f"data/soldier_records/{id}.pkl", "wb") as f:
             pickle.dump(data, f)
 
         # refresh cookie to refresh session token
