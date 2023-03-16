@@ -1,6 +1,6 @@
 import os
 
-from config import CHROMEDRIVER_FILENAME
+from src.config import CHROMEDRIVER_FILENAME
 
 from selenium.webdriver.support.wait import WebDriverWait
 from seleniumwire import webdriver

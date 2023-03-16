@@ -163,9 +163,9 @@ def send_docsearch_req(req_headers : Dict[str, str], payload : Dict)-> List[int]
 
 def get_record_ids() -> np.ndarray:
     # if ids are already cached, use them instead of scraping
-    if os.path.exists("data/confederate_ids.npy"):
+    if os.path.exists("data/soldier_ids.npy"):
         print("using cached ids")
-        return np.load("data/confederate_ids.npy", allow_pickle=True)
+        return np.load("data/soldier_ids.npy", allow_pickle=True)
 
     req_headers = auth.REQ_HEADERS.copy()
 
@@ -193,6 +193,6 @@ def get_record_ids() -> np.ndarray:
     sorted_flattened_ids = sorted_flattened_ids[sorted_flattened_ids != 654162824]
 
     # cache ids for future use
-    np.save("data/confederate_ids.npy", sorted_flattened_ids)
+    np.save("data/soldier_ids.npy", sorted_flattened_ids)
 
     return sorted_flattened_ids

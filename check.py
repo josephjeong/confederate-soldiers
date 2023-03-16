@@ -1,6 +1,8 @@
 import re
 import json
 
+from pprint import pprint
+
 # read regiment.html
 with open("regiment.html", "r") as f:
     html = f.read()
@@ -23,14 +25,24 @@ startDate = documents["startDate"]
 
 # muster out
 endDate = documents["endDate"]
-endPlace = documents["endPlace"]
+# endPlace = documents["endPlace"]
 
 # get commander list
 history = documents["history"]
 matches = re.findall(r"<li><a href=\"https://www\.fold3\.com/memorial/.+?/.*?\">(.+?)</a> \((.*?)\)</li>", history)
-for match in matches:
-    print(match)
+commanders = [{
+    "name": match[0],
+    "info": match[1]
+} for match in matches]
+
+output = {
+    "startDate": startDate,
+    "endDate": endDate,
+    "commanders": commanders,
+    "companies": companies,
+    "battles": battles
+}
 
 # save to json file
-with open("regiment.json", "w") as f:
-    json.dump(documents, f, indent=4)
+with open("output.json", "w") as f:
+    json.dump(output, f, indent=4)
