@@ -1,0 +1,330 @@
+{
+    "startDate": "1861-09-12T00:00:00-07:00",
+    "endDate": "1865-08-21T00:00:00-07:00",
+    "commanders": [
+        {
+            "name": "Abbott, Edwin H",
+            "info": "%Musician, September 1861 - August 1862"
+        },
+        {
+            "name": "Blakesley, Dennis",
+            "info": "Musician/Musician Third Class, September 1861 - September 1862"
+        },
+        {
+            "name": "Bryan, John",
+            "info": "Musician First Class, ? - April 1861; Musician, April 1861 - April 1861; Principal Musician/Band Master, March 1862 - September 1862"
+        },
+        {
+            "name": "Bulkley, Edward",
+            "info": "Assistant Surgeon, August 1861 - September 1864"
+        },
+        {
+            "name": "Callender, Fredrick E.",
+            "info": "Comm Sergeant/Commissary Sergeant, February 1864 - August 1865"
+        },
+        {
+            "name": "Carey, John",
+            "info": "Musician/Musician Third Class, September 1861 - September 1862"
+        },
+        {
+            "name": "Chatfield, John L.",
+            "info": "^%Colonel, ? - April 1861; Major, April 1861 - May 1861; Lieutenant Colonel, May 1861 - May 1861; Colonel, September 1861 - August 1863"
+        },
+        {
+            "name": "Churchill, William",
+            "info": "Musician/Musician Third Class, September 1861 - September 1862"
+        },
+        {
+            "name": "Colton, Joseph",
+            "info": "Hospital Steward, September 1861 - June 1863; Quartermaster/First Lieutenant/regimental Quartermaster/Hospital Steward, June 1863 - September 1864"
+        },
+        {
+            "name": "Dibble, Frederick L.",
+            "info": "Surgeon, ? - April 1861; Assistant Surgeon, April 1861 - July 1861; Surgeon/Assistant Surgeon, September 1861 - September 1864"
+        },
+        {
+            "name": "Duryee, Redfield",
+            "info": "Lieutenant/adjutant, ? - April 1861; Lieutenant Colonel, September 1863 - December 1863; Colonel/Adjutant, December 1863 - May 1864"
+        },
+        {
+            "name": "Ely, William Grosvenor",
+            "info": "#^Lieutenant Colonel; Colonel/Full Lieutenant Colonel, August 1862 - March 1865"
+        },
+        {
+            "name": "Fisher, Peter C.",
+            "info": "Musician/Musician First Class, September 1861 - September 1862"
+        },
+        {
+            "name": "Fox, Andrew W.",
+            "info": "Musician/Musician Third Class, April 1861 - April 1861"
+        },
+        {
+            "name": "Fromm, Valentine",
+            "info": "Musician Third Class, ? - April 1861; Musician, April 1861 - July 1861"
+        },
+        {
+            "name": "Fyfe, John",
+            "info": "Principal Musician, ? - April 1861; Musician, April 1861 - April 1861; Principal Musician/Musician, September 1861 - November 1862"
+        },
+        {
+            "name": "Gearry, John W.",
+            "info": "Musician Third Class, August 1861 - February 1863"
+        },
+        {
+            "name": "Gussman, Henry",
+            "info": "Principal Musician/Musician, July 1863 - September 1864"
+        },
+        {
+            "name": "Hammond, Clovis E.",
+            "info": "^%Quatermaster Sergeant, March 1862 - December 1863; Second Lieutenant, December 1863 - March 1864; First Lieutenant/Lieutenant, March 1864 - June 1864"
+        },
+        {
+            "name": "Hicks, Sidney Smith",
+            "info": "Principal Musician, September 1861 - November 1862; Musician, November 1862 - February 1863; First Sergeant, February 1863 - March 1864; Second Lieutenant, March 1864 - June 1864; First Lieutenant, June 1864 - August 1865"
+        },
+        {
+            "name": "Hoyt, Henry A.",
+            "info": "^Assistant Surgeon, September 1861 - October 1862; Assistant Surgeon, April 1865 - August 1865"
+        },
+        {
+            "name": "Hunt, Frank H.",
+            "info": "Musician/Musician Third Class, September 1861 - September 1862"
+        },
+        {
+            "name": "King, Frederick A.",
+            "info": "Musician, ? - April 1861"
+        },
+        {
+            "name": "King, John P.",
+            "info": "#^First Lieutenant, March 1862 - October 1862; Sergeant Major, October 1862 - March 1864; Captain, March 1864 - June 1864"
+        },
+        {
+            "name": "Klein, Daniel",
+            "info": "Major, January 1864 - October 1864; Lieutenant Colonel, October 1864 - August 1865"
+        },
+        {
+            "name": "Leishman, Charles M",
+            "info": "Musician, September 1861 - September 1862"
+        },
+        {
+            "name": "Meeker, Lorenzo",
+            "info": "^Major, July 1862 - January 1864; Lieutenant Colonel, January 1864 - September 1864"
+        },
+        {
+            "name": "Pickett, Chauncey J",
+            "info": "Musician/Musician Third Class, September 1861 - September 1862"
+        },
+        {
+            "name": "Rockwell, Alfred Perkins",
+            "info": "Brevet Brig-gen/Brigadier General/Full Colonel, March 1865 - ?"
+        },
+        {
+            "name": "Speidel, John",
+            "info": "^Major, ? - April 1861; Captain, April 1861 - May 1861; Major, May 1861 - June 1861; Lieutenant Colonel, June 1861 - July 1861; Major, September 1861 - July 1862; Lieutenant Colonel, July 1862 - July 1863"
+        },
+        {
+            "name": "St Clair, John W",
+            "info": "Principal Musician, December 1864 - June 1865"
+        },
+        {
+            "name": "Stanley, Henry F.",
+            "info": "First Sergeant, October 1863 - May 1864; Adjutant/Corporal/First Lieutenant/First Lieutenant/adjutant, October 1864 - November 1864"
+        },
+        {
+            "name": "Tiffany, Charles Comfort",
+            "info": "Chaplain, September 1864 - May 1865"
+        },
+        {
+            "name": "Ward, Henry O.",
+            "info": "Quatermaster Sergeant/Quartermaster Sergeant, December 1864 - June 1865"
+        },
+        {
+            "name": "Williams, Isaac V B",
+            "info": "First Lieutenant/quartermaster, ? - April 1861; Qtr Master Serg/Quartermaster Sergeant, April 1861 - July 1861; First Lieutenant/First Lieutenant/regimental Quartermaster/Quartermaster Sergeant, September 1861 - May 1863"
+        },
+        {
+            "name": "Wooster, William Henry Harrison",
+            "info": "First Lieutenant/First Lieutenant/regimental Quartermaster, October 1864 - August 1865"
+        }
+    ],
+    "companies": [
+        {
+            "shortName": "A",
+            "name": "Connecticut 6th Volunteer Infantry, Company A (Union)",
+            "place": "Connecticut"
+        },
+        {
+            "shortName": "B",
+            "name": "Connecticut 6th Volunteer Infantry, Company B (Union)",
+            "place": "Connecticut"
+        },
+        {
+            "shortName": "C",
+            "name": "Connecticut 6th Volunteer Infantry, Company C (Union)",
+            "place": "Connecticut"
+        },
+        {
+            "shortName": "D",
+            "name": "Connecticut 6th Volunteer Infantry, Company D (Union)",
+            "place": "Connecticut"
+        },
+        {
+            "shortName": "E",
+            "name": "Connecticut 6th Volunteer Infantry, Company E (Union)",
+            "place": "Connecticut"
+        },
+        {
+            "shortName": "F",
+            "name": "Connecticut 6th Volunteer Infantry, Company F (Union)",
+            "place": "Connecticut"
+        },
+        {
+            "shortName": "F&S",
+            "name": "Connecticut 6th Volunteer Infantry, Company F&S (Union)",
+            "place": "Connecticut"
+        },
+        {
+            "shortName": "G",
+            "name": "Connecticut 6th Volunteer Infantry, Company G (Union)",
+            "place": "Connecticut"
+        },
+        {
+            "shortName": "H",
+            "name": "Connecticut 6th Volunteer Infantry, Company H (Union)",
+            "place": "Connecticut"
+        },
+        {
+            "shortName": "I",
+            "name": "Connecticut 6th Volunteer Infantry, Company I (Union)",
+            "place": "Connecticut"
+        },
+        {
+            "shortName": "K",
+            "name": "Connecticut 6th Volunteer Infantry, Company K (Union)",
+            "place": "Connecticut"
+        }
+    ],
+    "battles": [
+        {
+            "battleId": 10338,
+            "name": "Chaffin's Farm",
+            "place": "Henrico County, Virginia",
+            "startDate": "1864-09-20T00:00:00-07:00",
+            "endDate": "1864-09-30T00:00:00-07:00"
+        },
+        {
+            "battleId": 10059,
+            "name": "Fort Pulaski",
+            "description": "Fort Pulaski, built between 1829 and 1847, was placed near the mouth of the Savannah River to block upriver access to the city. Brick and masonry fortifications such as Pulaski, called \"third system\" forts, were considered invincible, but the new technology of rifled artillery would soon change that. To shut down blockade running traffic from coastal Georgia and South Carolina, the Union army and navy mounted an expedition in November, 1861 to occupy the land area surrounding Savannah. Tybee Island, opposi\u2026",
+            "place": "Chatham County, Georgia",
+            "startDate": "1862-04-10T00:00:00-07:00",
+            "endDate": "1862-04-11T00:00:00-07:00"
+        },
+        {
+            "battleId": 10386,
+            "name": "Wilmington",
+            "place": "Wilmington, North Carolina",
+            "startDate": "1865-02-22T00:00:00-07:00",
+            "endDate": "1865-02-22T00:00:00-07:00"
+        },
+        {
+            "battleId": 10310,
+            "name": "Fort Stevens",
+            "description": "After his victory over Maj. Gen. Lew Wallace at the Battle of Monocacy in central Maryland on July 9th, Confederate Maj. Gen. Jubal A. Early pressed his advantage and moved south toward the Union capital in Washington, DC. On July 11th, Early's exhausted Confederates reached the outskirts of Washington near Silver Spring. Skirmishers advanced to feel the fortifications that encircled the city, which at the time were manned only by Home Guards, clerks, and convalescent troops. During the night, Union reinfo\u2026",
+            "place": "District of Columbia, DC",
+            "startDate": "1864-07-11T00:00:00-07:00",
+            "endDate": "1864-07-12T00:00:00-07:00"
+        },
+        {
+            "battleId": 10067,
+            "name": "Drewry's Bluff",
+            "place": "Chesterfield County, Virginia",
+            "startDate": "1862-05-15T00:00:00-07:00",
+            "endDate": "1862-05-15T00:00:00-07:00"
+        },
+        {
+            "battleId": 10270,
+            "name": "Spotsylvania Court House",
+            "description": "Following the Battle of the Wilderness, Lieut. Gen. Ulysses S. Grant marched the Union army south with the hope of capturing Spotsylvania Court House and preventing Robert E. Lee's army from retreating further. Lee's Confederates, however, managed to get ahead of the Federals and block the road. Fighting began on May 8th, when the Union Fifth Corps under Maj. Gen. Gouverneur K. Warren and the Sixth Corps under Maj. Gen. John Sedgwick engaged Confederate Maj. Gen. Richard Anderson's First Corps at Laurel Hi\u2026",
+            "place": "Spotsylvania County, Virginia",
+            "startDate": "1864-05-08T00:00:00-07:00",
+            "endDate": "1864-05-21T00:00:00-07:00"
+        },
+        {
+            "battleId": 10359,
+            "name": "Fair Oaks & Darbytown Road",
+            "place": "Henrico County, Virginia",
+            "startDate": "1864-10-27T00:00:00-07:00",
+            "endDate": "1864-10-28T00:00:00-07:00"
+        },
+        {
+            "battleId": 10203,
+            "name": "Second Fort Wagner",
+            "place": "Morris Island, South Carolina",
+            "startDate": "1863-07-18T00:00:00-07:00",
+            "endDate": "1863-07-18T00:00:00-07:00"
+        },
+        {
+            "battleId": 10003,
+            "name": "Second Pocotaligo",
+            "description": "The battle of Second Pocotaligo or Pocotaligo Bridge was fought in an effort to sever the connection between the Charleston and Savannah Railroads that would allow Union troops to isolate Charleston, South Carolina.",
+            "place": "Yemassee, South Carolina",
+            "startDate": "1862-10-22T00:00:00-07:00",
+            "endDate": "1862-10-22T00:00:00-07:00"
+        },
+        {
+            "battleId": 10326,
+            "name": "Second Deep Bottom",
+            "description": "As he had done in late July during the Battle of the Crater, Lieut. Gen. Ulysses S. Grant called upon Maj. Gen. Winfield S. Hancock and his Second Corps to attack Gen. Robert E. Lee's forces around Richmond to exploit suspected weaknesses in Lee's lines. In early August, Grant had detached the Sixth Corps from the Union lines around Richmond and Petersburg and sent them to the Shenandoah Valley under Maj. Gen. Phil Sheridan. Sheridan's new army there was to counter Gen. Jubal Early, then operating in the v\u2026",
+            "place": "Henrico County, VIrginia",
+            "startDate": "1864-08-14T00:00:00-07:00",
+            "endDate": "1864-08-20T00:00:00-07:00"
+        },
+        {
+            "battleId": 10078,
+            "name": "Secessionville",
+            "description": "In early June 1862, the Union divisions of Brig. Gens. Horatio G. Wright and Isaac I. Stevens, under the overall command of Brig. Gen. Henry Benham, landed on James Island just southwest of Charleston, South Carolina. Benham entrenched at Grimball's Landing near the southern end of the Confederate defensive line around the city. On June 16th, Benham's 6,500 men from the 3rd New Hampshire, 8th Michigan, 7th Connecticut, 28th Massachusetts, and 79th New York \"Highlanders\" infantry regiments advanced toward C\u2026",
+            "place": "Charleston, South Carolina",
+            "startDate": "1862-06-16T00:00:00-07:00",
+            "endDate": "1862-06-16T00:00:00-07:00"
+        },
+        {
+            "battleId": 10199,
+            "name": "Fort Wagner",
+            "description": "Fort Wagner, part of the formidable Confederate defenses of Charleston Harbor, was built on Morris Island on the south edge of the bay. The fort's 30-foot high earth and sand filled walls protected 14 heavy artillery pieces that could bear on attackers or warships trying to enter the harbor. The Union Navy attempted to reduce the defenses of Charleston in early 1863 with little success. In early June, Brig. Gen. Quincy Gillmore attempted to capture the batteries on Morris Island and use them against Fort S\u2026",
+            "place": "Morris Island, South Carolina",
+            "startDate": "1863-07-10T00:00:00-07:00",
+            "endDate": "1863-07-11T00:00:00-07:00"
+        },
+        {
+            "battleId": 10295,
+            "name": "First Petersburg",
+            "place": "Petersburg, Virginia",
+            "startDate": "1864-06-09T00:00:00-07:00",
+            "endDate": "1864-06-09T00:00:00-07:00"
+        },
+        {
+            "battleId": 10349,
+            "name": "Cedar Creek",
+            "description": "Known As: Cedar Creek, Belle Grove",
+            "place": "Frederick County, Virginia; Shenandoah County, Virginia; Warren County, Virginia",
+            "startDate": "1864-10-19T00:00:00-07:00",
+            "endDate": "1864-10-19T00:00:00-07:00"
+        },
+        {
+            "battleId": 10345,
+            "name": "Darbytown and New Market Roads",
+            "place": "Henrico County, Virginia",
+            "startDate": "1864-10-07T00:00:00-07:00",
+            "endDate": "1864-10-07T00:00:00-07:00"
+        },
+        {
+            "battleId": 10380,
+            "name": "Second Fort Fisher",
+            "description": "By January 1865, Fort Fisher on the North Carolina shore was the last coastal stronghold of the Confederacy. The fort protected blockade running vessels entering and departing Wilmington, the South's last open seaport on the Atlantic coast. Maj. Gen. Alfred Terry was placed in command of a Provisional Corps from the Army of the James, and was supported by a Navy and Marine Corps force of nearly 60 vessels under Rear Adm. David D. Porter. Terry's orders were to renew operations against the fort that had fai\u2026",
+            "place": "New Hanover County, North Carolina",
+            "startDate": "1865-01-13T00:00:00-07:00",
+            "endDate": "1865-01-15T00:00:00-07:00"
+        }
+    ]
+}

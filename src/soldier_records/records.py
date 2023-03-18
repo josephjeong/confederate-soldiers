@@ -9,7 +9,7 @@ import numpy as np
 import src.auth as auth
 import src.config as config
 
-def send_record_req(id : int):
+def send_soldier_record_req(id : int):
     # copy request headers so we don't modify the original
     req_headers = auth.REQ_HEADERS.copy()
 
@@ -37,12 +37,12 @@ def send_record_req(id : int):
 
     except Exception as e:
         # append id to text file so we can scrape it later
-        with open("data/failed_ids.txt", "a") as f:
+        with open("data/failed_soldier_ids.txt", "a") as f:
             f.write(f"{id}\n")
 
-def get_and_save_records(ids: np.ndarray):
+def get_and_save_soldier_records(ids: np.ndarray):
     with ThreadPoolExecutor(max_workers=config.MAX_WORKERS) as executor:
-        list(tqdm(executor.map(send_record_req, ids),
+        list(tqdm(executor.map(send_soldier_record_req, ids),
             total=len(ids),
             desc= "scraping all confederate soldier records"
         ))

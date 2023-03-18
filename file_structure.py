@@ -7,7 +7,7 @@ from tqdm import tqdm
 # open soldier_ids.pickle
 with open("data/regiment_ids.pickle", "rb") as f:
     soldier_ids = pickle.load(f)
-print(soldier_ids)
+print(len(soldier_ids))
 
 # # exit
 # exit()

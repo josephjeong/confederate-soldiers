@@ -5,13 +5,10 @@ from typing import Callable
 def retry_requests(
         records_dir : str,
         failed_ids_path : str,
-        get_record_ids : Callable[[], np.ndarray], 
+        ids : np.ndarray,
         get_and_save_records : Callable[[np.ndarray], None],
     ):
     while True:
-        # read all ids
-        ids = get_record_ids()
-
         # get all files in data/soldier_records
         filenames = os.listdir(records_dir)
         if filenames:

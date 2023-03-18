@@ -1,17 +1,22 @@
 import re
 import json
+import pickle
 
 from pprint import pprint
 
 # read regiment.html
-with open("regiment.html", "r") as f:
-    html = f.read()
+# with open("regiment.html", "r") as f:
+#     html = f.read()
 
-# send data in html webpage received
-match = re.search(r"\"F3_COMPONENT_DATA\":\s*({(?:.*)})", html)
-if match is None:
-    raise Exception("no match")
-data = json.loads(match.group(1))
+# # send data in html webpage received
+# match = re.search(r"\"F3_COMPONENT_DATA\":\s*({(?:.*)})", html)
+# if match is None:
+#     raise Exception("no match")
+# data = json.loads(match.group(1))
+
+# open regiment pickle file
+with open("data/regiment_records/10003.pkl", "rb") as f:
+    data = pickle.load(f)
 
 regimentContent = data["regimentContent"]
 

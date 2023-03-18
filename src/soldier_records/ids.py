@@ -161,7 +161,7 @@ def send_docsearch_req(req_headers : Dict[str, str], payload : Dict)-> List[int]
     print("reason:", exc_reason)
     sys.exit(1)
 
-def get_record_ids() -> np.ndarray:
+def scrape_solider_ids() -> np.ndarray:
     # if ids are already cached, use them instead of scraping
     if os.path.exists("data/soldier_ids.npy"):
         print("using cached ids")
