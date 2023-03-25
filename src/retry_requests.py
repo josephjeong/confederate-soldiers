@@ -9,7 +9,6 @@ def retry_requests(
         get_and_save_records : Callable[[np.ndarray], None],
     ):
     while True:
-        # get all files in data/soldier_records
         filenames = os.listdir(records_dir)
         if filenames:
             filename_ids = np.array([int(filename.split(".")[0]) for filename in filenames])
@@ -23,7 +22,6 @@ def retry_requests(
             print("re-scraping failed results")
             ids = result
 
-        # clear existing failed_ids.txt
         open(failed_ids_path, "w").close()
 
         # run actual scraping operation

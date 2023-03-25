@@ -7,7 +7,7 @@ from concurrent.futures import ProcessPoolExecutor
 from tqdm import tqdm
 from collections import defaultdict
 
-def process_file(filename: str) -> pd.DataFrame:
+def process_soldier_file(filename: str) -> pd.DataFrame:
     with open(f"data/soldier_records/{filename}", "rb") as f:
         data = pickle.load(f)
     
@@ -70,18 +70,18 @@ def process_file(filename: str) -> pd.DataFrame:
     return df
 
 # open and unpickle all files in "data/soldier_records" directory
-def get_all_records() -> pd.DataFrame:
+def process_all_soldier_records() -> pd.DataFrame:
     filenames = os.listdir("data/soldier_records")
     with ProcessPoolExecutor() as executor:
         records = pd.concat(tqdm(
-            executor.map(process_file, filenames), 
+            executor.map(process_soldier_file, filenames), 
             total=len(filenames), 
             desc="unpickling records"
         ))
     return records
 
-def compile_csv():
-    df = get_all_records()
+def compile_soldier_csv():
+    df = process_all_soldier_records()
 
     print("compiling csv")
     df.to_csv("data/soldier_records.csv", index=False)

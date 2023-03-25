@@ -7,7 +7,7 @@ if __name__ == "__main__":
     get_headers_dict()
 
     # scrape solider reocrds
-    # soldiers.scrape()
+    soldiers.scrape()
 
     # scrape regiment records
     regiments.scrape()
